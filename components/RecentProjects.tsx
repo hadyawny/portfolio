@@ -12,17 +12,17 @@ const RecentProjects = () => {
         A small selection of{" "}
         <span className="text-purple">recent projects</span>
       </h1>
-      <div className="flex flex-wrap items-center justify-center p-2 sm:p-4 gap-8 sm:gap-16 mt-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12 xl:gap-16 mt-10 place-items-center p-4 w-full mx-auto">
         {projects.map((item) => (
           <div
-            className="lg:min-h-[32.5rem] h-[20rem] sm:h-[25rem] flex items-center justify-center sm:w-96 w-[85vw] max-w-sm"
+            className="min-h-[24rem] sm:min-h-[26rem] lg:min-h-[28rem] flex items-center justify-center w-full mb-8"
             key={item.id}
           >
             <PinContainer
-              title="/ui.aceternity.com"
-              href="https://twitter.com/mannupaaji"
+              title={item.link ? new URL(item.link).hostname : "GitHub"}
+              href={item.link || "https://github.com/hadyawny"}
             >
-              <div className="relative flex items-center justify-center sm:w-96 w-[85vw] max-w-sm overflow-hidden h-[15vh] sm:h-[20vh] lg:h-[30vh] mb-10">
+              <div className="relative flex items-center justify-center w-[330px] overflow-hidden h-[160px] sm:h-[200px] lg:h-[240px] mb-10">
                 <div
                   className="relative w-full h-full overflow-hidden lg:rounded-3xl"
                   style={{ backgroundColor: "#13162D" }}
@@ -32,7 +32,7 @@ const RecentProjects = () => {
                 <img
                   src={item.img}
                   alt="cover"
-                  className="z-10 absolute bottom-0"
+                  className="z-10 absolute inset-0 w-full h-full object-contain"
                 />
               </div>
 
