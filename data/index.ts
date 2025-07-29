@@ -1,7 +1,8 @@
 export const navItems = [
   { name: "About", link: "#about" },
   { name: "Projects", link: "#projects" },
-  { name: "Testimonials", link: "#testimonials" },
+  { name: "Experience", link: "#experience" },
+  // { name: "Testimonials", link: "#testimonials" },
   { name: "Contact", link: "#contact" },
 ];
 
@@ -94,29 +95,28 @@ export const projects = [
     iconLists: ["/next.svg", "/re.svg", "/ts.svg", "/tail.svg", "/c.svg"],
     link: "https://github.com/hadyawny/",
   },
-
 ];
 
-export const testimonials = [
-  {
-    quote:
-      "Working with developers who demonstrate strong technical skills and dedication to continuous learning is always impressive. The ability to work across multiple technology stacks while maintaining code quality shows great potential.",
-    name: "Sarah Chen",
-    title: "Senior Developer at Tech Solutions Inc.",
-  },
-  {
-    quote:
-      "The attention to detail and problem-solving approach demonstrated in recent projects shows promising development skills. Looking forward to seeing continued growth in full-stack development.",
-    name: "Ahmed Hassan",
-    title: "Technical Lead at Innovation Labs",
-  },
-  {
-    quote:
-      "Great enthusiasm for learning new technologies and implementing best practices. The projects showcase a solid understanding of modern development frameworks and user experience design.",
-    name: "Emily Rodriguez",
-    title: "Frontend Architect at Digital Dynamics",
-  },
-];
+// export const testimonials = [
+//   {
+//     quote:
+//       "Working with developers who demonstrate strong technical skills and dedication to continuous learning is always impressive. The ability to work across multiple technology stacks while maintaining code quality shows great potential.",
+//     name: "Sarah Chen",
+//     title: "Senior Developer at Tech Solutions Inc.",
+//   },
+//   {
+//     quote:
+//       "The attention to detail and problem-solving approach demonstrated in recent projects shows promising development skills. Looking forward to seeing continued growth in full-stack development.",
+//     name: "Ahmed Hassan",
+//     title: "Technical Lead at Innovation Labs",
+//   },
+//   {
+//     quote:
+//       "Great enthusiasm for learning new technologies and implementing best practices. The projects showcase a solid understanding of modern development frameworks and user experience design.",
+//     name: "Emily Rodriguez",
+//     title: "Frontend Architect at Digital Dynamics",
+//   },
+// ];
 
 export const companies = [
   {

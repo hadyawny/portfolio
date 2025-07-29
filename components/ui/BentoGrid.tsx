@@ -65,7 +65,7 @@ export const BentoGridItem = ({
   titleClassName?: string;
   spareImg?: string;
 }) => {
-  const leftLists = ["ReactJS", "Express", "Typescript"];
+  const leftLists = ["ReactJS", "ExpressJS", "Typescript"];
   const rightLists = ["NextJs", "NodeJs", "Javascript"];
 
   const [copied, setCopied] = useState(false);
@@ -85,7 +85,7 @@ export const BentoGridItem = ({
   };
 
   const handleCopy = () => {
-    const text = "hady.awny@icloud.com";
+    const text = "hadyawny5@gmail.com";
     navigator.clipboard.writeText(text);
     setCopied(true);
   };
@@ -120,7 +120,7 @@ export const BentoGridItem = ({
         </div>
         <div
           className={`absolute right-0 -bottom-5 ${
-            id === 5 && "w-full opacity-80"
+            id === 5 && "w-full opacity-60"
           } `}
         >
           {spareImg && (
@@ -143,17 +143,26 @@ export const BentoGridItem = ({
         <div
           className={cn(
             titleClassName,
-            "group-hover/bento:translate-x-2 transition duration-200 relative md:h-full min-h-40 flex flex-col px-5 p-5 lg:p-10"
+            "group-hover/bento:translate-x-2 transition duration-200 relative md:h-full min-h-40 flex flex-col px-5 p-5 lg:p-10",
+            id === 5 && "backdrop-blur-sm bg-black/20 rounded-lg"
           )}
         >
           {/* change the order of the title and des, font-extralight, remove text-xs text-neutral-600 dark:text-neutral-300 , change the text-color */}
-          <div className="font-sans font-extralight md:max-w-32 md:text-xs lg:text-base text-sm text-[#C1C2D3] z-10">
+          <div
+            className={cn(
+              "font-sans font-extralight md:max-w-32 md:text-xs lg:text-base text-sm text-[#C1C2D3] z-10",
+              id === 5 && "drop-shadow-lg text-shadow-lg text-white font-medium"
+            )}
+          >
             {description}
           </div>
           {/* add text-3xl max-w-96 , remove text-neutral-600 dark:text-neutral-300*/}
           {/* remove mb-2 mt-2 */}
           <div
-            className={`font-sans text-lg lg:text-3xl max-w-96 font-bold z-10`}
+            className={cn(
+              `font-sans text-lg lg:text-3xl max-w-96 font-bold z-10`,
+              id === 5 && "drop-shadow-xl text-shadow-xl text-white"
+            )}
           >
             {title}
           </div>

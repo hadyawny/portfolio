@@ -13,7 +13,7 @@ const Grid = dynamic(() => import("@/components/Grid"), {
   ),
 });
 const Footer = dynamic(() => import("@/components/Footer"));
-const Clients = dynamic(() => import("@/components/Clients"));
+// const Clients = dynamic(() => import("@/components/Clients"));
 const Approach = dynamic(() => import("@/components/Approach"));
 const Experience = dynamic(() => import("@/components/Experience"));
 const RecentProjects = dynamic(() => import("@/components/RecentProjects"));
@@ -25,9 +25,9 @@ const Home = () => {
         <FloatingNav navItems={navItems} />
         <Hero />
         <Grid />
-        <RecentProjects />
-        <Clients />
         <Experience />
+        <RecentProjects />
+        {/* <Clients /> */}
         <Approach />
         <Footer />
       </div>
