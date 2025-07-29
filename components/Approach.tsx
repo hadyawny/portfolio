@@ -9,8 +9,8 @@ const Approach = () => {
       <h1 className="heading">
         My <span className="text-purple">approach</span>
       </h1>
-      {/* remove bg-white dark:bg-black */}
-      <div className="my-20 flex flex-col lg:flex-row items-center justify-center w-full gap-4">
+      {/* Enhanced responsive design */}
+      <div className="my-20 flex flex-col lg:flex-row items-center justify-center w-full gap-4 px-4 lg:px-0">
         {/* add des prop */}
         <Card
           title="Planning & Strategy"
@@ -20,7 +20,7 @@ const Approach = () => {
           navigation, and content requirements."
         >
           <CanvasRevealEffect
-            animationSpeed={5.1}
+            animationSpeed={3.0} // Reduced from 5.1 to 3.0 for better performance
             // add these classed for the border rounded overflowing -> rounded-3xl overflow-hidden
             containerClassName="bg-emerald-900 rounded-3xl overflow-hidden"
           />
@@ -84,9 +84,9 @@ const Card = ({
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      // change h-[30rem] to h-[35rem], add rounded-3xl
+      // Enhanced mobile responsiveness
       className="border border-black/[0.2] group/canvas-card flex items-center justify-center
-       dark:border-white/[0.2]  max-w-sm w-full mx-auto p-4 relative lg:h-[35rem] rounded-3xl "
+       dark:border-white/[0.2] max-w-sm w-full mx-auto p-4 relative h-[30rem] sm:h-[32rem] lg:h-[35rem] rounded-3xl"
       style={{
         //   add these two
         //   you can generate the color from here https://cssgradient.io/

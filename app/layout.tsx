@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: "Hady's Portfolio",
 };
 
+export const viewport = "width=device-width, initial-scale=1";
+
 export default function RootLayout({
   children,
 }: Readonly<{

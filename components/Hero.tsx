@@ -60,7 +60,25 @@ const Hero = () => {
             Hi! I&apos;m Hady, a Next.js Developer based in Egypt.
           </p>
 
-          <a href="#about">
+          <a
+            href="#about"
+            onClick={(e) => {
+              e.preventDefault();
+              const element = document.querySelector("#about") as HTMLElement;
+              if (element) {
+                const elementPosition = element.offsetTop;
+                // Responsive offset: smaller on mobile, larger on desktop
+                const isMobile = window.innerWidth < 640;
+                const offset = isMobile ? 80 : 120;
+                const offsetPosition = elementPosition - offset;
+
+                window.scrollTo({
+                  top: offsetPosition,
+                  behavior: "smooth",
+                });
+              }
+            }}
+          >
             <MagicButton
               title="Show my work"
               icon={<FaLocationArrow />}

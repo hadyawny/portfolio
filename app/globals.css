@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fix for floating navbar cutting off content - responsive */
+html {
+  scroll-padding-top: 100px; /* Mobile */
+  scroll-behavior: smooth;
+}
+
+@media (min-width: 640px) {
+  html {
+    scroll-padding-top: 150px; /* Desktop */
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

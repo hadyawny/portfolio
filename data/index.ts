@@ -111,30 +111,6 @@ export const testimonials = [
     name: "Michael Johnson",
     title: "Director of AlphaStream Technologies",
   },
-  {
-    quote:
-      "Collaborating with Hady was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Hady's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Hady is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
-  {
-    quote:
-      "Collaborating with Hady was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Hady's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Hady is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
-  {
-    quote:
-      "Collaborating with Hady was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Hady's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Hady is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
-  {
-    quote:
-      "Collaborating with Hady was an absolute pleasure. His professionalism, promptness, and dedication to delivering exceptional results were evident throughout our project. Hady's enthusiasm for every facet of development truly stands out. If you're seeking to elevate your website and elevate your brand, Hady is the ideal partner.",
-    name: "Michael Johnson",
-    title: "Director of AlphaStream Technologies",
-  },
 ];
 
 export const companies = [
@@ -194,7 +170,6 @@ export const workExperience = [
   },
 ];
 
-
 export const socialMedia = [
   {
     id: 1,
@@ -207,4 +182,3 @@ export const socialMedia = [
     url: "https://www.linkedin.com/in/hadyawny/", // replace with your LinkedIn link
   },
 ];
-
