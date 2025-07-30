@@ -3,8 +3,8 @@ import { IoCopyOutline } from "react-icons/io5";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-// Also install this npm i --save-dev @types/react-lottie
-const Lottie = dynamic(() => import("react-lottie"), {
+// Using lottie-react instead of react-lottie for better stability
+const Lottie = dynamic(() => import("lottie-react"), {
   ssr: false,
   loading: () => (
     <div className="w-10 h-10 bg-purple-500 rounded animate-pulse"></div>
@@ -75,19 +75,29 @@ export const BentoGridItem = ({
     setIsClient(true); // only true after component mounts (client-side)
   }, []);
 
-  const defaultOptions = {
-    loop: copied,
-    autoplay: copied,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-
-  const handleCopy = () => {
+  const handleCopy = async () => {
     const text = "hadyawny5@gmail.com";
-    navigator.clipboard.writeText(text);
-    setCopied(true);
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      // Reset the copied state after 3 seconds
+      setTimeout(() => setCopied(false), 3000);
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        setCopied(true);
+        setTimeout(() => setCopied(false), 3000);
+      } catch (fallbackErr) {
+        console.error("Fallback copy failed: ", fallbackErr);
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   return (
@@ -213,8 +223,13 @@ export const BentoGridItem = ({
               >
                 {/* <img src="/confetti.gif" alt="confetti" /> */}
                 {isClient && copied && (
-                  <div className="absolute -bottom-5 right-0">
-                    <Lottie options={defaultOptions} height={200} width={400} />
+                  <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
+                    <Lottie
+                      animationData={animationData}
+                      loop={false}
+                      autoplay={true}
+                      style={{ height: 300, width: 600 }}
+                    />
                   </div>
                 )}{" "}
               </div>
