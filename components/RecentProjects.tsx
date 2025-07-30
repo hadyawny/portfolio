@@ -20,7 +20,6 @@ const RecentProjects = () => {
           >
             <PinContainer
               title={item.link ? new URL(item.link).hostname : "GitHub"}
-              href={item.link || "https://github.com/hadyawny"}
             >
               <div className="relative flex items-center justify-center w-[330px] overflow-hidden h-[160px] sm:h-[200px] lg:h-[240px] mb-10">
                 <div
@@ -65,12 +64,17 @@ const RecentProjects = () => {
                   ))}
                 </div>
 
-                <div className="flex justify-center items-center">
+                <a
+                  href={item.link || "https://github.com/hadyawny"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex justify-center items-center cursor-pointer hover:opacity-80 transition-opacity"
+                >
                   <p className="flex lg:text-xl md:text-xs text-sm text-purple">
                     Check Live Site
                   </p>
                   <FaLocationArrow className="ms-3" color="#CBACF9" />
-                </div>
+                </a>
               </div>
             </PinContainer>
           </div>
