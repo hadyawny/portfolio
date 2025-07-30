@@ -76,7 +76,7 @@ export const projects = [
     title: "MovieMania - Movie Discovery App",
     des: "Flutter mobile app for discovering movies with detailed information, ratings, and reviews. Available on Google Play Store.",
     img: "/moviemania.png",
-    iconLists: ["/re.svg", "/tail.svg", "/ts.svg", "/three.svg", "/fm.svg"],
+    iconLists: ["/flutter.svg", "/firebase.svg", "/dart.svg"],
     link: "https://play.google.com/store/apps/details?id=com.hadyawny.moviemania&hl=en&gl=US",
   },
   {
@@ -84,7 +84,7 @@ export const projects = [
     title: "Tripma - Flight Booking Website",
     des: "Modern flight booking platform built during my internship. Features flight search, booking, and user management with responsive design.",
     img: "/tripma.png",
-    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/re.svg"],
+    iconLists: ["/next.svg", "/tail.svg", "/js.svg", "/mongodb.svg"],
     link: "https://tripma-six.vercel.app/",
   },
   {
@@ -92,7 +92,13 @@ export const projects = [
     title: "CloudGate - Cloud Storage Platform",
     des: "A comprehensive cloud storage solution with advanced file management, user authentication, and multi-database architecture. Currently in development.",
     img: "/cloudGate.png",
-    iconLists: ["/next.svg", "/re.svg", "/ts.svg", "/tail.svg", "/c.svg"],
+    iconLists: [
+      "/next.svg",
+      "/tail.svg",
+      "/js.svg",
+      "/mongodb.svg",
+      "/mysql.svg",
+    ],
     link: "https://github.com/hadyawny/",
   },
 ];
