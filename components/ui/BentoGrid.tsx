@@ -182,7 +182,7 @@ export const BentoGridItem = ({
 
           {/* Tech stack list div - Enhanced mobile responsiveness */}
           {id === 3 && (
-            <div className="flex gap-1 sm:gap-3 lg:gap-5 w-fit absolute -right-1 sm:-right-3 lg:-right-2">
+            <div className="flex gap-1 sm:gap-3 lg:gap-5 w-fit absolute right-2 sm:right-4 lg:right-4">
               {/* tech stack lists - Enhanced mobile sizing */}
               <div className="flex flex-col gap-2 sm:gap-3 md:gap-3 lg:gap-8">
                 {leftLists.map((item, i) => (
