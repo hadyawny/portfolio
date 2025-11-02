@@ -5,12 +5,12 @@ import { CanvasRevealEffect } from "./ui/CanvasRevealEffect";
 
 const Approach = () => {
   return (
-    <section className="w-full py-20">
+    <section className="w-full py-20 px-4">
       <h1 className="heading">
         My <span className="text-purple">approach</span>
       </h1>
       {/* Enhanced responsive design */}
-      <div className="my-20 flex flex-col lg:flex-row items-center justify-center w-full gap-4 px-4 lg:px-0">
+      <div className="my-20 flex flex-col lg:flex-row items-center justify-center w-full gap-4 max-w-7xl mx-auto">
         {/* add des prop */}
         <Card
           title="Planning & Strategy"

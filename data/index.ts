@@ -81,11 +81,11 @@ export const projects = [
   },
   {
     id: 2,
-    title: "Tripma - Flight Booking Website",
-    des: "Modern flight booking platform built during my internship. Features flight search, booking, and user management with responsive design.",
-    img: "/tripma.png",
+    title: "Scoutora - AI Career Toolkit",
+    des: "AI-powered platform for job search and CV generation with authentication and responsive dashboard",
+    img: "/scoutora.jpeg",
     iconLists: ["/next.svg", "/tail.svg", "/js.svg", "/mongodb.svg"],
-    link: "https://tripma-six.vercel.app/",
+    link: "https://www.scoutora.com/",
   },
   {
     id: 3,
@@ -99,7 +99,7 @@ export const projects = [
       "/mongodb.svg",
       "/mysql.svg",
     ],
-    link: "https://github.com/hadyawny/",
+    link: "https://cloudgate.opex.com.sa/",
   },
 ];
 

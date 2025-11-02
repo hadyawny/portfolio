@@ -5,12 +5,12 @@ import { Button } from "./ui/MovingBorders";
 
 const Experience = () => {
   return (
-    <div id="experience" className="py-20 w-full">
+    <div id="experience" className="py-20 w-full px-4">
       <h1 className="heading">
         My <span className="text-purple">work experience</span>
       </h1>
 
-      <div className="w-full mt-12 grid lg:grid-cols-4 grid-cols-1 gap-10">
+      <div className="w-full mt-12 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 md:gap-8 lg:gap-10 max-w-7xl mx-auto">
         {workExperience.map((card) => (
           <Button
             key={card.id}
