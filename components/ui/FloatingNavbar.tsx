@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { FiDownload } from "react-icons/fi";
 
 export const FloatingNav = ({
   navItems,
@@ -78,6 +79,21 @@ export const FloatingNav = ({
             )}
             onClick={(e) => {
               e.preventDefault();
+
+              // Handle Resume download
+              if (navItem.link === "#resume") {
+                const link = document.createElement('a');
+                link.href = "/Hady%20Awny's%20Resume.pdf";
+                link.download = "Hady_Awny_Resume.pdf";
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                return;
+              }
+
+              // Handle normal smooth scroll for other nav items
               const element = document.querySelector(
                 navItem.link
               ) as HTMLElement;
@@ -98,7 +114,12 @@ export const FloatingNav = ({
             <span className="block sm:hidden">{navItem.icon}</span>
             {/* add !cursor-pointer */}
             {/* remove hidden sm:block for the mobile responsive */}
-            <span className=" text-sm !cursor-pointer">{navItem.name}</span>
+            <span className="text-sm !cursor-pointer flex items-center gap-1">
+              {navItem.name}
+              {navItem.link === "#resume" && (
+                <FiDownload className="w-3 h-3 sm:w-4 sm:h-4" />
+              )}
+            </span>
           </Link>
         ))}
         {/* remove this login btn */}

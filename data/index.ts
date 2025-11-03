@@ -4,6 +4,7 @@ export const navItems = [
   { name: "Experience", link: "#experience" },
   // { name: "Testimonials", link: "#testimonials" },
   { name: "Contact", link: "#contact" },
+  { name: "Resume", link: "#resume" },
 ];
 
 export const gridItems = [
