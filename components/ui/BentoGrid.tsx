@@ -65,8 +65,8 @@ export const BentoGridItem = ({
   titleClassName?: string;
   spareImg?: string;
 }) => {
-  const leftLists = ["ReactJS", "ExpressJS", "Typescript"];
-  const rightLists = ["NextJs", "NodeJs", "Javascript"];
+  const leftLists = ["ReactJS", "NodeJs", "React Native", "Javascript"];
+  const rightLists = ["NextJs", "ExpressJS", "Flutter", "Typescript"];
 
   const [copied, setCopied] = useState(false);
   const [isClient, setIsClient] = useState(false);
@@ -182,27 +182,22 @@ export const BentoGridItem = ({
 
           {/* Tech stack list div - Enhanced mobile responsiveness */}
           {id === 3 && (
-            <div className="flex gap-1 sm:gap-3 lg:gap-5 w-fit absolute right-2 sm:right-4 lg:right-4">
-              {/* tech stack lists - Enhanced mobile sizing */}
-              <div className="flex flex-col gap-2 sm:gap-3 md:gap-3 lg:gap-8">
+            <div className="flex gap-2 sm:gap-3 w-fit absolute right-2 sm:right-4 top-0 bottom-0 items-center">
+              <div className="flex flex-col gap-2 sm:gap-3">
                 {leftLists.map((item, i) => (
                   <span
                     key={i}
-                    className="py-1 px-2 sm:py-2 sm:px-3 lg:py-4 lg:px-3 text-xs lg:text-base opacity-50 
-                    lg:opacity-100 rounded-lg text-center bg-[#10132E]"
+                    className="py-1.5 px-2 sm:py-2 sm:px-3 text-xs sm:text-sm opacity-50 lg:opacity-100 rounded-lg text-center bg-[#10132E]"
                   >
                     {item}
                   </span>
                 ))}
-                <span className="py-2 px-2 sm:py-3 sm:px-3 lg:py-4 lg:px-3 rounded-lg text-center bg-[#10132E]"></span>
               </div>
-              <div className="flex flex-col gap-2 sm:gap-3 md:gap-3 lg:gap-8">
-                <span className="py-2 px-2 sm:py-3 sm:px-3 lg:py-4 lg:px-3 rounded-lg text-center bg-[#10132E]"></span>
+              <div className="flex flex-col gap-2 sm:gap-3">
                 {rightLists.map((item, i) => (
                   <span
                     key={i}
-                    className="py-1 px-2 sm:py-2 sm:px-3 lg:py-4 lg:px-3 text-xs lg:text-base opacity-50 
-                    lg:opacity-100 rounded-lg text-center bg-[#10132E]"
+                    className="py-1.5 px-2 sm:py-2 sm:px-3 text-xs sm:text-sm opacity-50 lg:opacity-100 rounded-lg text-center bg-[#10132E]"
                   >
                     {item}
                   </span>

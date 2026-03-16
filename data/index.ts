@@ -80,13 +80,21 @@ export const projects = [
     iconLists: ["/flutter.svg", "/firebase.svg", "/dart.svg"],
     link: "https://play.google.com/store/apps/details?id=com.hadyawny.moviemania&hl=en&gl=US",
   },
+  // {
+  //   id: 2,
+  //   title: "Scoutora - AI Career Toolkit",
+  //   des: "AI-powered platform for job search and CV generation with authentication and responsive dashboard",
+  //   img: "/scoutora.jpeg",
+  //   iconLists: ["/next.svg", "/tail.svg", "/js.svg", "/mongodb.svg"],
+  //   link: "https://www.scoutora.com/",
+  // },
   {
     id: 2,
-    title: "Scoutora - AI Career Toolkit",
-    des: "AI-powered platform for job search and CV generation with authentication and responsive dashboard",
-    img: "/scoutora.jpeg",
-    iconLists: ["/next.svg", "/tail.svg", "/js.svg", "/mongodb.svg"],
-    link: "https://www.scoutora.com/",
+    title: "Dimensions Games - Board Games Marketplace",
+    des: "Board games marketplace featuring product browsing, ordering, authentication, and admin dashboard management.",
+    img: "/dimensionsgames.jpg",
+    iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/postgresql.jpg"],
+    link: "https://dimensionsgames.fun/",
   },
   {
     id: 3,
@@ -168,18 +176,25 @@ export const workExperience = [
   },
   {
     id: 2,
-    title: "Software Developer Intern",
-    desc: "Worked on real-world projects using React.js, Next.js, and Node.js. Collaborated with a team to develop and optimize user interfaces.",
+    title: "Front-End Developer",
+    desc: "Worked on real-world projects using React and Next.js. Collaborated with a team to develop and optimize user interfaces.",
     className: "md:col-span-2",
-    thumbnail: "/exp4.svg", // Replace with Obelion.ai logo if available
+    thumbnail: "/exp4.svg",
   },
-  {
-    id: 3,
-    title: "Front-End Developer Intern",
-    desc: "Developed web applications using React.js and Next.js. Focused on building responsive interfaces and integrating APIs with Node.js.",
-    className: "md:col-span-2",
-    thumbnail: "/exp2.svg", // Replace with ITI logo if available
-  },
+  // {
+  //   id: 2,
+  //   title: "Software Developer Intern",
+  //   desc: "Worked on real-world projects using React.js, Next.js, and Node.js. Collaborated with a team to develop and optimize user interfaces.",
+  //   className: "md:col-span-2",
+  //   thumbnail: "/exp4.svg",
+  // },
+  // {
+  //   id: 3,
+  //   title: "Front-End Developer Intern",
+  //   desc: "Developed web applications using React.js and Next.js. Focused on building responsive interfaces and integrating APIs with Node.js.",
+  //   className: "md:col-span-2",
+  //   thumbnail: "/exp2.svg",
+  // },
 ];
 
 export const socialMedia = [
