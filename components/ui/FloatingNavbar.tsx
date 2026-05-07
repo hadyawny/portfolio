@@ -18,6 +18,7 @@ export const FloatingNav = ({
     name: string;
     link: string;
     icon?: JSX.Element;
+    hideOnMobile?: boolean;
   }[];
   className?: string;
 }) => {
@@ -60,7 +61,7 @@ export const FloatingNav = ({
         }}
         className={cn(
           // Enhanced responsive design for navbar
-          "flex max-w-fit md:min-w-[70vw] lg:min-w-fit fixed z-[5000] top-2 sm:top-10 inset-x-0 mx-auto px-4 sm:px-10 py-3 sm:py-5 rounded-lg border border-black/.1 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] items-center justify-center space-x-2 sm:space-x-4",
+          "flex max-w-fit md:min-w-fit fixed z-[5000] top-4 sm:top-6 md:top-10 inset-x-0 mx-auto px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-full md:rounded-lg border border-black/.1 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] items-center justify-center gap-3 sm:gap-4 md:gap-5",
           className
         )}
         style={{
@@ -75,7 +76,8 @@ export const FloatingNav = ({
             key={`link=${idx}`}
             href={navItem.link}
             className={cn(
-              "relative dark:text-neutral-50 items-center  flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+              "relative dark:text-neutral-50 items-center text-neutral-600 dark:hover:text-purple hover:text-neutral-500 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple",
+              navItem.hideOnMobile ? "hidden sm:flex" : "flex"
             )}
             onClick={(e) => {
               e.preventDefault();
@@ -111,10 +113,7 @@ export const FloatingNav = ({
               }
             }}
           >
-            <span className="block sm:hidden">{navItem.icon}</span>
-            {/* add !cursor-pointer */}
-            {/* remove hidden sm:block for the mobile responsive */}
-            <span className="text-sm !cursor-pointer flex items-center gap-1">
+            <span className="text-xs sm:text-sm !cursor-pointer flex items-center gap-1">
               {navItem.name}
               {navItem.link === "#resume" && (
                 <FiDownload className="w-3 h-3 sm:w-4 sm:h-4" />

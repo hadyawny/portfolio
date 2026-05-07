@@ -1,53 +1,65 @@
 import React from "react";
+import Image from "next/image";
 
 import { workExperience } from "@/data";
 import { Button } from "./ui/MovingBorders";
 
 const Experience = () => {
   return (
-    <div id="experience" className="py-20 w-full px-4">
+    <section id="experience" className="py-12 md:py-16 lg:py-20 w-full">
       <h1 className="heading">
         My <span className="text-purple">work experience</span>
       </h1>
 
-      <div className="w-full mt-12 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6 md:gap-8 lg:gap-10 max-w-7xl mx-auto">
+      <div className="w-full mt-10 md:mt-14 grid lg:grid-cols-2 grid-cols-1 gap-6 md:gap-8 max-w-5xl mx-auto">
         {workExperience.map((card) => (
           <Button
             key={card.id}
-            //   random duration will be fun , I think , may be not
-            duration={Math.floor(Math.random() * 10000) + 10000}
-            borderRadius="1.75rem"
+            duration={12000 + card.id * 1500}
+            borderRadius="1.5rem"
             style={{
-              //   add these two
-              //   you can generate the color from here https://cssgradient.io/
               background: "rgb(4,7,29)",
               backgroundColor:
                 "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
-              // add this border radius to make it more rounded so that the moving border is more realistic
-              borderRadius: `calc(1.75rem* 0.96)`,
+              borderRadius: `calc(1.5rem * 0.96)`,
             }}
-            // remove bg-white dark:bg-slate-900
-            className="flex-1 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+            className="text-white border-slate-800"
           >
-            <div className="flex lg:flex-row flex-col lg:items-center p-3 py-6 md:p-5 lg:p-10 gap-2">
-              <img
-                src={card.thumbnail}
-                alt={card.thumbnail}
-                className="lg:w-32 md:w-20 w-16"
-              />
-              <div className="lg:ms-5">
-                <h1 className="text-start text-xl md:text-2xl font-bold">
-                  {card.title}
-                </h1>
-                <p className="text-start text-white-100 mt-3 font-semibold">
-                  {card.desc}
-                </p>
-              </div>
-            </div>
+            <article className="flex flex-col gap-4 p-6 md:p-8 text-left w-full">
+              <header className="flex items-start gap-4">
+                <Image
+                  src={card.thumbnail}
+                  alt={`${card.company} logo`}
+                  width={56}
+                  height={56}
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-lg object-contain shrink-0"
+                />
+                <div className="flex-1 min-w-0">
+                  <h2 className="text-lg md:text-xl font-bold leading-tight">
+                    {card.title}
+                  </h2>
+                  <p className="text-purple text-sm md:text-base font-medium mt-1">
+                    {card.company}
+                    <span className="text-white-200">
+                      {" "}
+                      • {card.location}
+                    </span>
+                  </p>
+                  <p className="text-white-200 text-xs md:text-sm mt-1">
+                    {card.period}
+                  </p>
+                </div>
+              </header>
+              <ul className="space-y-2 text-sm md:text-base text-white-100 list-disc pl-5 marker:text-purple">
+                {card.bullets.map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
+              </ul>
+            </article>
           </Button>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

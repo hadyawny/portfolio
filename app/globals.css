@@ -16,13 +16,13 @@
 
 /* Fix for floating navbar cutting off content - responsive */
 html {
-  scroll-padding-top: 100px; /* Mobile */
+  scroll-padding-top: 80px; /* Mobile */
   scroll-behavior: smooth;
 }
 
 @media (min-width: 640px) {
   html {
-    scroll-padding-top: 150px; /* Desktop */
+    scroll-padding-top: 120px; /* Tablet+ */
   }
 }
 
@@ -105,5 +105,26 @@ html {
 @layer utilities {
   .heading {
     @apply font-bold text-3xl sm:text-4xl md:text-5xl text-center px-4;
+  }
+}
+
+/* Visible focus outline for keyboard users (does not interfere with mouse clicks) */
+@layer base {
+  :focus-visible {
+    outline: 2px solid #cbacf9;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* Honor user's reduced-motion preference globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }

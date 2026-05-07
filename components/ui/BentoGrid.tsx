@@ -1,29 +1,13 @@
-import { useState, useEffect } from "react";
-import { IoCopyOutline } from "react-icons/io5";
-import Image from "next/image";
-import dynamic from "next/dynamic";
+"use client";
 
-// Using lottie-react instead of react-lottie for better stability
-const Lottie = dynamic(() => import("lottie-react"), {
-  ssr: false,
-  loading: () => (
-    <div className="w-10 h-10 bg-purple-500 rounded animate-pulse"></div>
-  ),
-});
+import { useState } from "react";
+import { IoCopyOutline } from "react-icons/io5";
+import { FaCheck } from "react-icons/fa6";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
-import { BackgroundGradientAnimation } from "./GradientBg";
-import animationData from "@/data/confetti.json";
 import MagicButton from "../MagicButton";
-
-// Lazy load the heavy GridGlobe component
-const GridGlobe = dynamic(() => import("./GridGlobe"), {
-  loading: () => (
-    <div className="w-20 h-20 bg-blue-500/20 rounded-full animate-pulse mx-auto"></div>
-  ),
-  ssr: false,
-});
 
 export const BentoGrid = ({
   className,
@@ -35,7 +19,6 @@ export const BentoGrid = ({
   return (
     <div
       className={cn(
-        // change gap-4 to gap-8, change grid-cols-3 to grid-cols-5, remove md:auto-rows-[18rem], add responsive code
         "grid grid-cols-1 md:grid-cols-6 lg:grid-cols-5 md:grid-row-7 gap-4 lg:gap-8 mx-auto",
         className
       )}
@@ -45,12 +28,90 @@ export const BentoGrid = ({
   );
 };
 
+// Approximate continent dot positions on a 200x110 viewBox (Equirectangular-ish)
+const CONTINENT_DOTS: [number, number][] = [
+  // North America
+  [38, 38], [44, 35], [50, 38], [42, 42], [48, 44], [54, 42], [46, 48], [52, 50],
+  // South America
+  [62, 62], [66, 66], [62, 70], [64, 76], [60, 80], [66, 82],
+  // Europe
+  [98, 32], [104, 30], [102, 36], [108, 34], [96, 38],
+  // Africa
+  [102, 50], [108, 54], [104, 60], [110, 64], [106, 70], [100, 56], [112, 58],
+  // Asia
+  [122, 32], [130, 30], [138, 32], [144, 36], [134, 40], [128, 38], [142, 44], [150, 38],
+  // Australia
+  [156, 70], [162, 72], [160, 76], [166, 74],
+];
+
+// Three "active" pulse markers — clients you can reach (Cairo, EU, Americas)
+const PULSE_NODES: { cx: number; cy: number; delay: string }[] = [
+  { cx: 105, cy: 50, delay: "0s" },     // Cairo / North Africa
+  { cx: 100, cy: 32, delay: "0.7s" },   // Europe
+  { cx: 46, cy: 42, delay: "1.4s" },    // North America
+];
+
+const TimeZoneVisual = () => (
+  <div
+    className="absolute inset-x-0 bottom-0 flex items-end justify-center pointer-events-none"
+    aria-hidden="true"
+  >
+    <div className="relative w-full max-w-[280px] md:max-w-[340px] aspect-[200/110]">
+      <div className="absolute inset-0 rounded-2xl bg-purple/10 blur-3xl" />
+      <svg
+        viewBox="0 0 200 110"
+        className="relative w-full h-full"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        {CONTINENT_DOTS.map(([cx, cy], i) => (
+          <circle
+            key={i}
+            cx={cx}
+            cy={cy}
+            r="1.4"
+            fill="#CBACF9"
+            fillOpacity="0.55"
+          />
+        ))}
+        {PULSE_NODES.map((p, i) => (
+          <g key={`p-${i}`}>
+            <circle
+              cx={p.cx}
+              cy={p.cy}
+              r="3"
+              fill="#CBACF9"
+              className="motion-safe:animate-ping origin-center"
+              style={{ animationDelay: p.delay, animationDuration: "2.4s" }}
+            />
+            <circle cx={p.cx} cy={p.cy} r="1.8" fill="#FFFFFF" />
+          </g>
+        ))}
+        <path
+          d="M 46 42 Q 75 10 105 50"
+          fill="none"
+          stroke="#CBACF9"
+          strokeOpacity="0.35"
+          strokeWidth="0.6"
+          strokeDasharray="2 2"
+        />
+        <path
+          d="M 100 32 Q 102 40 105 50"
+          fill="none"
+          stroke="#CBACF9"
+          strokeOpacity="0.35"
+          strokeWidth="0.6"
+          strokeDasharray="2 2"
+        />
+      </svg>
+    </div>
+  </div>
+);
+
 export const BentoGridItem = ({
   className,
   id,
   title,
   description,
-  //   remove unecessary things here
   img,
   imgClassName,
   titleClassName,
@@ -65,26 +126,15 @@ export const BentoGridItem = ({
   titleClassName?: string;
   spareImg?: string;
 }) => {
-  const leftLists = ["ReactJS", "NodeJs", "React Native", "Javascript"];
-  const rightLists = ["NextJs", "ExpressJS", "Flutter", "Typescript"];
-
   const [copied, setCopied] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true); // only true after component mounts (client-side)
-  }, []);
 
   const handleCopy = async () => {
     const text = "hadyawny5@gmail.com";
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      // Reset the copied state after 3 seconds
-      setTimeout(() => setCopied(false), 3000);
-    } catch (err) {
-      console.error("Failed to copy text: ", err);
-      // Fallback for older browsers
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
       const textArea = document.createElement("textarea");
       textArea.value = text;
       document.body.appendChild(textArea);
@@ -92,9 +142,9 @@ export const BentoGridItem = ({
       try {
         document.execCommand("copy");
         setCopied(true);
-        setTimeout(() => setCopied(false), 3000);
-      } catch (fallbackErr) {
-        console.error("Fallback copy failed: ", fallbackErr);
+        setTimeout(() => setCopied(false), 2500);
+      } catch {
+        // silently fail
       }
       document.body.removeChild(textArea);
     }
@@ -103,40 +153,34 @@ export const BentoGridItem = ({
   return (
     <div
       className={cn(
-        // remove p-4 rounded-3xl dark:bg-black dark:border-white/[0.2] bg-white  border border-transparent, add border border-white/[0.1] overflow-hidden relative
         "row-span-1 relative overflow-hidden rounded-3xl border border-white/[0.1] group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none justify-between flex flex-col space-y-4",
         className
       )}
       style={{
-        //   add these two
-        //   you can generate the color from here https://cssgradient.io/
         background: "rgb(4,7,29)",
         backgroundColor:
           "linear-gradient(90deg, rgba(4,7,29,1) 0%, rgba(12,14,35,1) 100%)",
       }}
     >
-      {/* add img divs */}
       <div className={`${id === 6 && "flex justify-center"} h-full`}>
         <div className="w-full h-full absolute">
           {img && (
             <Image
               src={img}
-              alt={img}
+              alt=""
+              aria-hidden="true"
               fill
               className={cn(imgClassName, "object-cover object-center")}
-              priority={id === 1} // Priority loading for first image
+              priority={id === 1}
             />
           )}
         </div>
-        <div
-          className={`absolute right-0 -bottom-5 ${
-            id === 5 && "w-full opacity-60"
-          } `}
-        >
+        <div className="absolute right-0 -bottom-5">
           {spareImg && (
             <Image
               src={spareImg}
-              alt={spareImg}
+              alt=""
+              aria-hidden="true"
               width={220}
               height={220}
               className="object-cover object-center w-full h-full"
@@ -144,94 +188,32 @@ export const BentoGridItem = ({
           )}
         </div>
         {id === 6 && (
-          // add background animation , remove the p tag
-          <BackgroundGradientAnimation>
-            <div className="absolute z-50 inset-0 flex items-center justify-center text-white font-bold px-4 pointer-events-none text-3xl text-center md:text-4xl lg:text-7xl"></div>
-          </BackgroundGradientAnimation>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-br from-purple/20 via-transparent to-blue-500/10"
+          />
         )}
 
         <div
           className={cn(
             titleClassName,
-            "group-hover/bento:translate-x-2 transition duration-200 relative md:h-full min-h-40 flex flex-col px-5 p-5 lg:p-10",
-            id === 5 && "backdrop-blur-sm bg-black/20 rounded-lg"
+            "group-hover/bento:translate-x-2 transition duration-200 relative md:h-full min-h-40 flex flex-col px-5 p-5 lg:p-10"
           )}
         >
-          {/* change the order of the title and des, font-extralight, remove text-xs text-neutral-600 dark:text-neutral-300 , change the text-color */}
-          <div
-            className={cn(
-              "font-sans font-extralight md:max-w-32 md:text-xs lg:text-base text-sm text-[#C1C2D3] z-10",
-              id === 5 && "drop-shadow-lg text-shadow-lg text-white font-medium"
-            )}
-          >
+          <div className="font-sans font-extralight md:max-w-32 md:text-xs lg:text-base text-sm text-[#C1C2D3] z-10">
             {description}
           </div>
-          {/* add text-3xl max-w-96 , remove text-neutral-600 dark:text-neutral-300*/}
-          {/* remove mb-2 mt-2 */}
-          <div
-            className={cn(
-              `font-sans text-lg lg:text-3xl max-w-96 font-bold z-10`,
-              id === 5 && "drop-shadow-xl text-shadow-xl text-white"
-            )}
-          >
+          <div className="font-sans text-lg lg:text-3xl max-w-96 font-bold z-10">
             {title}
           </div>
 
-          {/* for the github 3d globe */}
-          {id === 2 && <GridGlobe />}
+          {id === 2 && <TimeZoneVisual />}
 
-          {/* Tech stack list div - Enhanced mobile responsiveness */}
-          {id === 3 && (
-            <div className="flex gap-2 sm:gap-3 w-fit absolute right-2 sm:right-4 top-0 bottom-0 items-center">
-              <div className="flex flex-col gap-2 sm:gap-3">
-                {leftLists.map((item, i) => (
-                  <span
-                    key={i}
-                    className="py-1.5 px-2 sm:py-2 sm:px-3 text-xs sm:text-sm opacity-50 lg:opacity-100 rounded-lg text-center bg-[#10132E]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <div className="flex flex-col gap-2 sm:gap-3">
-                {rightLists.map((item, i) => (
-                  <span
-                    key={i}
-                    className="py-1.5 px-2 sm:py-2 sm:px-3 text-xs sm:text-sm opacity-50 lg:opacity-100 rounded-lg text-center bg-[#10132E]"
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
           {id === 6 && (
             <div className="mt-5 relative">
-              {/* button border magic from tailwind css buttons  */}
-              {/* add rounded-md h-8 md:h-8, remove rounded-full */}
-              {/* remove focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 */}
-              {/* add handleCopy() for the copy the text */}
-              <div
-                className={`absolute -bottom-5 right-0 ${
-                  copied ? "block" : "block"
-                }`}
-              >
-                {/* <img src="/confetti.gif" alt="confetti" /> */}
-                {isClient && copied && (
-                  <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
-                    <Lottie
-                      animationData={animationData}
-                      loop={false}
-                      autoplay={true}
-                      style={{ height: 300, width: 600 }}
-                    />
-                  </div>
-                )}{" "}
-              </div>
-
               <MagicButton
-                title={copied ? "Email is Copied!" : "Copy my email address"}
-                icon={<IoCopyOutline />}
+                title={copied ? "Email copied!" : "Copy my email address"}
+                icon={copied ? <FaCheck /> : <IoCopyOutline />}
                 position="left"
                 handleClick={handleCopy}
                 otherClasses="!bg-[#161A31]"

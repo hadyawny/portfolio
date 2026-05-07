@@ -1,9 +1,13 @@
-export const navItems = [
+export const navItems: {
+  name: string;
+  link: string;
+  hideOnMobile?: boolean;
+}[] = [
   { name: "About", link: "#about" },
+  { name: "Skills", link: "#skills", hideOnMobile: true },
   { name: "Projects", link: "#projects" },
   { name: "Experience", link: "#experience" },
-  // { name: "Testimonials", link: "#testimonials" },
-  { name: "Contact", link: "#contact" },
+  { name: "Contact", link: "#contact", hideOnMobile: true },
   { name: "Resume", link: "#resume" },
 ];
 
@@ -15,7 +19,7 @@ export const gridItems = [
     className: "lg:col-span-3 md:col-span-6 md:row-span-4 lg:min-h-[60vh]",
     imgClassName: "w-full h-full",
     titleClassName: "justify-end",
-    img: "/b1.svg",
+    img: "/b1.webp",
     spareImg: "",
   },
   {
@@ -29,35 +33,14 @@ export const gridItems = [
     spareImg: "",
   },
   {
-    id: 3,
-    title: "My tech stack",
-    description: "Always learning",
-    className: "lg:col-span-2 md:col-span-3 md:row-span-2",
-    imgClassName: "",
-    titleClassName: "justify-center",
-    img: "",
-    spareImg: "",
-  },
-  {
     id: 4,
     title: "Tech enthusiast with a passion for development.",
     description: "",
     className: "lg:col-span-2 md:col-span-3 md:row-span-1",
     imgClassName: "",
     titleClassName: "justify-start",
-    img: "/grid.svg",
+    img: "/grid.webp",
     spareImg: "/b4.svg",
-  },
-
-  {
-    id: 5,
-    title: "Currently working on CloudGate Website",
-    description: "The Inside Scoop",
-    className: "md:col-span-3 md:row-span-2",
-    imgClassName: "absolute right-0 bottom-0 md:w-96 w-60",
-    titleClassName: "justify-center md:justify-start lg:justify-center",
-    img: "/b5.svg",
-    spareImg: "/grid.svg",
   },
   {
     id: 6,
@@ -76,31 +59,26 @@ export const projects = [
     id: 1,
     title: "MovieMania - Movie Discovery App",
     des: "Flutter mobile app for discovering movies with detailed information, ratings, and reviews. Available on Google Play Store.",
-    img: "/moviemania.png",
+    img: "/moviemania.webp",
+    imgAlt: "MovieMania movie discovery app screenshot",
     iconLists: ["/flutter.svg", "/firebase.svg", "/dart.svg"],
     link: "https://play.google.com/store/apps/details?id=com.hadyawny.moviemania&hl=en&gl=US",
   },
-  // {
-  //   id: 2,
-  //   title: "Scoutora - AI Career Toolkit",
-  //   des: "AI-powered platform for job search and CV generation with authentication and responsive dashboard",
-  //   img: "/scoutora.jpeg",
-  //   iconLists: ["/next.svg", "/tail.svg", "/js.svg", "/mongodb.svg"],
-  //   link: "https://www.scoutora.com/",
-  // },
   {
     id: 2,
     title: "Dimensions Games - Board Games Marketplace",
     des: "Board games marketplace featuring product browsing, ordering, authentication, and admin dashboard management.",
-    img: "/dimensionsgames.jpg",
+    img: "/dimensionsgames.webp",
+    imgAlt: "Dimensions Games board game marketplace screenshot",
     iconLists: ["/next.svg", "/tail.svg", "/ts.svg", "/postgresql.jpg"],
     link: "https://dimensionsgames.fun/",
   },
   {
     id: 3,
     title: "CloudGate - Cloud Storage Platform",
-    des: "A comprehensive cloud storage solution with advanced file management, user authentication, and multi-database architecture. Currently in development.",
-    img: "/cloudGate.png",
+    des: "A comprehensive cloud storage solution with advanced file management, user authentication, and multi-database architecture.",
+    img: "/cloudGate.webp",
+    imgAlt: "CloudGate cloud storage platform screenshot",
     iconLists: [
       "/next.svg",
       "/tail.svg",
@@ -112,100 +90,33 @@ export const projects = [
   },
 ];
 
-// export const testimonials = [
-//   {
-//     quote:
-//       "Working with developers who demonstrate strong technical skills and dedication to continuous learning is always impressive. The ability to work across multiple technology stacks while maintaining code quality shows great potential.",
-//     name: "Sarah Chen",
-//     title: "Senior Developer at Tech Solutions Inc.",
-//   },
-//   {
-//     quote:
-//       "The attention to detail and problem-solving approach demonstrated in recent projects shows promising development skills. Looking forward to seeing continued growth in full-stack development.",
-//     name: "Ahmed Hassan",
-//     title: "Technical Lead at Innovation Labs",
-//   },
-//   {
-//     quote:
-//       "Great enthusiasm for learning new technologies and implementing best practices. The projects showcase a solid understanding of modern development frameworks and user experience design.",
-//     name: "Emily Rodriguez",
-//     title: "Frontend Architect at Digital Dynamics",
-//   },
-// ];
-
-export const companies = [
-  {
-    id: 1,
-    name: "cloudinary",
-    img: "/cloud.svg",
-    nameImg: "/cloudName.svg",
-  },
-  {
-    id: 2,
-    name: "appwrite",
-    img: "/app.svg",
-    nameImg: "/appName.svg",
-  },
-  {
-    id: 3,
-    name: "HOSTINGER",
-    img: "/host.svg",
-    nameImg: "/hostName.svg",
-  },
-  {
-    id: 4,
-    name: "stream",
-    img: "/s.svg",
-    nameImg: "/streamName.svg",
-  },
-  {
-    id: 5,
-    name: "docker.",
-    img: "/dock.svg",
-    nameImg: "/dockerName.svg",
-  },
-];
-
 export const workExperience = [
   {
     id: 1,
+    company: "Obelion.ai",
+    location: "Cairo, Egypt",
     title: "Full Stack Developer",
-    desc: "Building scalable web applications using React.js, Next.js, and Node.js with a focus on performance and clean code.",
-    className: "md:col-span-2",
-    thumbnail: "/exp1.svg", // Replace with Obelion.ai logo if available
+    period: "Dec 2024 – Present",
+    bullets: [
+      "Develop and maintain scalable production-grade full-stack applications using React.js, Next.js, and Node.js.",
+      "Design and integrate REST APIs supporting scalable, high-performance applications.",
+      "Collaborate with cross-functional teams to deliver maintainable, production-ready features.",
+    ],
+    thumbnail: "/exp1.svg",
   },
-  {
-    id: 2,
-    title: "Front-End Developer",
-    desc: "Worked on real-world projects using React and Next.js. Collaborated with a team to develop and optimize user interfaces.",
-    className: "md:col-span-2",
-    thumbnail: "/exp4.svg",
-  },
-  // {
-  //   id: 2,
-  //   title: "Software Developer Intern",
-  //   desc: "Worked on real-world projects using React.js, Next.js, and Node.js. Collaborated with a team to develop and optimize user interfaces.",
-  //   className: "md:col-span-2",
-  //   thumbnail: "/exp4.svg",
-  // },
-  // {
-  //   id: 3,
-  //   title: "Front-End Developer Intern",
-  //   desc: "Developed web applications using React.js and Next.js. Focused on building responsive interfaces and integrating APIs with Node.js.",
-  //   className: "md:col-span-2",
-  //   thumbnail: "/exp2.svg",
-  // },
 ];
 
 export const socialMedia = [
   {
     id: 1,
     img: "/git.svg",
-    url: "https://github.com/hadyawny/", // replace with your actual GitHub link
+    url: "https://github.com/hadyawny/",
+    label: "GitHub profile",
   },
   {
     id: 2,
     img: "/link.svg",
-    url: "https://www.linkedin.com/in/hadyawny/", // replace with your LinkedIn link
+    url: "https://www.linkedin.com/in/hadyawny/",
+    label: "LinkedIn profile",
   },
 ];

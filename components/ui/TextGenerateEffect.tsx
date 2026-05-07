@@ -6,25 +6,31 @@ import { cn } from "@/lib/utils";
 export const TextGenerateEffect = ({
   words,
   className,
+  highlightFromWord,
 }: {
   words: string;
   className?: string;
+  highlightFromWord?: number;
 }) => {
   const [scope, animate] = useAnimate();
-  let wordsArray = words.split(" ");
+  const wordsArray = words.split(" ");
   useEffect(() => {
-    console.log(wordsArray);
     animate(
       "span",
       {
         opacity: 1,
       },
       {
-        duration: 2,
-        delay: stagger(0.2),
+        duration: 1.2,
+        delay: stagger(0.12),
       }
     );
   }, [scope.current]);
+
+  const highlightStart =
+    highlightFromWord !== undefined
+      ? highlightFromWord
+      : Math.max(0, wordsArray.length - 4);
 
   const renderWords = () => {
     return (
@@ -33,9 +39,11 @@ export const TextGenerateEffect = ({
           return (
             <motion.span
               key={word + idx}
-              // change here if idx is greater than 3, change the text color to #CBACF9
-              className={` ${idx > 3 ? "text-purple" : "dark:text-white text-black"
-                } opacity-0`}
+              className={`${
+                idx >= highlightStart
+                  ? "text-purple"
+                  : "dark:text-white text-black"
+              } opacity-0`}
             >
               {word}{" "}
             </motion.span>
