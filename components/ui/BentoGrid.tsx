@@ -250,6 +250,13 @@ export const BentoGridItem = ({
               alt=""
               aria-hidden="true"
               fill
+              // The optimizer rejects SVGs unless dangerouslyAllowSVG is on, and
+              // it cannot compress them anyway - serve them straight from /public.
+              unoptimized={img.endsWith(".svg")}
+              // Without `sizes` a fill image defaults to 100vw, so the optimizer
+              // is asked for a 1920px+ render of a tile that is never wider than
+              // ~770px. That is wasted work on a self-hosted optimizer.
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 768px"
               className={cn(imgClassName, "object-cover object-center")}
               priority={id === 1}
             />
@@ -261,6 +268,7 @@ export const BentoGridItem = ({
               src={spareImg}
               alt=""
               aria-hidden="true"
+              unoptimized={spareImg.endsWith(".svg")}
               width={220}
               height={220}
               className="object-cover object-center w-full h-full"

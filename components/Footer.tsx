@@ -17,6 +17,7 @@ const Footer = () => {
         <Image
           src="/footer-grid.svg"
           alt=""
+          unoptimized
           fill
           className="opacity-50 object-cover"
         />
@@ -58,6 +59,7 @@ const Footer = () => {
                   src={info.img}
                   alt=""
                   aria-hidden="true"
+                  unoptimized={info.img.endsWith(".svg")}
                   width={20}
                   height={20}
                 />
