@@ -14,6 +14,16 @@
   }
 }
 
+/* Drains across the active gallery dot for the length of one frame. */
+@keyframes gallery-dot-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 /* Fix for floating navbar cutting off content - responsive */
 html {
   scroll-padding-top: 80px; /* Mobile */

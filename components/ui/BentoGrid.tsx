@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoCopyOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa6";
 import Image from "next/image";
@@ -28,84 +28,164 @@ export const BentoGrid = ({
   );
 };
 
-// Approximate continent dot positions on a 200x110 viewBox (Equirectangular-ish)
-const CONTINENT_DOTS: [number, number][] = [
-  // North America
-  [38, 38], [44, 35], [50, 38], [42, 42], [48, 44], [54, 42], [46, 48], [52, 50],
-  // South America
-  [62, 62], [66, 66], [62, 70], [64, 76], [60, 80], [66, 82],
-  // Europe
-  [98, 32], [104, 30], [102, 36], [108, 34], [96, 38],
-  // Africa
-  [102, 50], [108, 54], [104, 60], [110, 64], [106, 70], [100, 56], [112, 58],
-  // Asia
-  [122, 32], [130, 30], [138, 32], [144, 36], [134, 40], [128, 38], [142, 44], [150, 38],
-  // Australia
-  [156, 70], [162, 72], [160, 76], [166, 74],
+const WORK_START = 9;
+const WORK_END = 18;
+
+const ZONES = [
+  { label: "Cairo", tz: "Africa/Cairo", isHome: true },
+  { label: "London", tz: "Europe/London", isHome: false },
+  { label: "New York", tz: "America/New_York", isHome: false },
 ];
 
-// Three "active" pulse markers — clients you can reach (Cairo, EU, Americas)
-const PULSE_NODES: { cx: number; cy: number; delay: string }[] = [
-  { cx: 105, cy: 50, delay: "0s" },     // Cairo / North Africa
-  { cx: 100, cy: 32, delay: "0.7s" },   // Europe
-  { cx: 46, cy: 42, delay: "1.4s" },    // North America
-];
+/** Minutes a zone is ahead of UTC, DST included, for the given instant. */
+const offsetMinutes = (timeZone: string, date: Date) => {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    hour12: false,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).formatToParts(date);
 
-const TimeZoneVisual = () => (
-  <div
-    className="absolute inset-x-0 bottom-0 flex items-end justify-center pointer-events-none"
-    aria-hidden="true"
-  >
-    <div className="relative w-full max-w-[280px] md:max-w-[340px] aspect-[200/110]">
-      <div className="absolute inset-0 rounded-2xl bg-purple/10 blur-3xl" />
-      <svg
-        viewBox="0 0 200 110"
-        className="relative w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+  // Intl renders midnight as hour 24; Date.UTC wants 0.
+  const hour = get("hour") % 24;
+  const asUTC = Date.UTC(get("year"), get("month") - 1, get("day"), hour, get("minute"));
+  return Math.round((asUTC - date.getTime()) / 60000);
+};
+
+const localTime = (timeZone: string, date: Date) =>
+  new Intl.DateTimeFormat("en-GB", {
+    timeZone,
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).format(date);
+
+/** A local-hours window as 0-100% segments on a shared UTC axis, split if it wraps midnight. */
+const toSegments = (startLocal: number, endLocal: number, offsetH: number) => {
+  const start = ((startLocal - offsetH) % 24 + 24) % 24;
+  const end = start + (endLocal - startLocal);
+  return end <= 24
+    ? [{ left: (start / 24) * 100, width: ((end - start) / 24) * 100 }]
+    : [
+        { left: (start / 24) * 100, width: ((24 - start) / 24) * 100 },
+        { left: 0, width: ((end - 24) / 24) * 100 },
+      ];
+};
+
+type ZoneRow = {
+  label: string;
+  isHome: boolean;
+  time: string;
+  segments: { left: number; width: number }[];
+};
+
+/**
+ * Live working-hours chart on a shared UTC axis. Each row is a city's 09:00-18:00
+ * local window, so where a row sits inside the highlighted Cairo band *is* the
+ * overlap — the thing anyone hiring across time zones actually wants to know.
+ */
+const TimeZoneVisual = () => {
+  const [rows, setRows] = useState<ZoneRow[] | null>(null);
+  const [homeBand, setHomeBand] = useState<{ left: number; width: number }[]>([]);
+  const [nowPct, setNowPct] = useState(0);
+
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date();
+      const built = ZONES.map((zone) => {
+        const offsetH = offsetMinutes(zone.tz, now) / 60;
+        return {
+          label: zone.label,
+          isHome: zone.isHome,
+          time: localTime(zone.tz, now),
+          segments: toSegments(WORK_START, WORK_END, offsetH),
+        };
+      });
+      setRows(built);
+      setHomeBand(built.find((r) => r.isHome)?.segments ?? []);
+      setNowPct(
+        ((now.getUTCHours() * 60 + now.getUTCMinutes()) / 1440) * 100
+      );
+    };
+
+    tick();
+    const id = window.setInterval(tick, 30_000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <div className="relative z-10 mt-4 w-full max-w-sm" aria-hidden="true">
+      <div
+        className={cn(
+          "relative rounded-xl border border-white/10 bg-black/25 p-3 backdrop-blur-sm transition-opacity duration-500",
+          rows ? "opacity-100" : "opacity-0"
+        )}
       >
-        {CONTINENT_DOTS.map(([cx, cy], i) => (
-          <circle
-            key={i}
-            cx={cx}
-            cy={cy}
-            r="1.4"
-            fill="#CBACF9"
-            fillOpacity="0.55"
-          />
-        ))}
-        {PULSE_NODES.map((p, i) => (
-          <g key={`p-${i}`}>
-            <circle
-              cx={p.cx}
-              cy={p.cy}
-              r="3"
-              fill="#CBACF9"
-              className="motion-safe:animate-ping origin-center"
-              style={{ animationDelay: p.delay, animationDuration: "2.4s" }}
+        {/* Cairo's working window, carried behind every row */}
+        <div className="pointer-events-none absolute inset-y-2 left-3 right-3">
+          {homeBand.map((seg, i) => (
+            <div
+              key={i}
+              className="absolute inset-y-0 rounded-sm bg-purple/[0.13]"
+              style={{ left: `${seg.left}%`, width: `${seg.width}%` }}
             />
-            <circle cx={p.cx} cy={p.cy} r="1.8" fill="#FFFFFF" />
-          </g>
-        ))}
-        <path
-          d="M 46 42 Q 75 10 105 50"
-          fill="none"
-          stroke="#CBACF9"
-          strokeOpacity="0.35"
-          strokeWidth="0.6"
-          strokeDasharray="2 2"
-        />
-        <path
-          d="M 100 32 Q 102 40 105 50"
-          fill="none"
-          stroke="#CBACF9"
-          strokeOpacity="0.35"
-          strokeWidth="0.6"
-          strokeDasharray="2 2"
-        />
-      </svg>
+          ))}
+          <div
+            className="absolute inset-y-0 w-px bg-white/45"
+            style={{ left: `${nowPct}%` }}
+          />
+        </div>
+
+        <ul className="relative space-y-2">
+          {(rows ?? ZONES.map((z) => ({ ...z, time: "--:--", segments: [] }))).map(
+            (row) => (
+              <li key={row.label} className="flex items-center gap-2">
+                <span
+                  className={cn(
+                    "w-[4.5rem] shrink-0 text-[10px] leading-none",
+                    row.isHome ? "font-semibold text-white" : "text-white-200"
+                  )}
+                >
+                  {row.label}
+                </span>
+
+                <span className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.07]">
+                  {row.segments.map((seg, i) => (
+                    <span
+                      key={i}
+                      className={cn(
+                        "absolute inset-y-0 rounded-full",
+                        row.isHome ? "bg-purple" : "bg-white/45"
+                      )}
+                      style={{ left: `${seg.left}%`, width: `${seg.width}%` }}
+                    />
+                  ))}
+                </span>
+
+                <span
+                  className={cn(
+                    "w-9 shrink-0 text-right text-[10px] leading-none tabular-nums",
+                    row.isHome ? "text-white" : "text-white-200"
+                  )}
+                >
+                  {row.time}
+                </span>
+              </li>
+            )
+          )}
+        </ul>
+
+        <p className="relative mt-2 text-[9px] leading-none text-white-200">
+          Working hours, 09:00–18:00 local
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export const BentoGridItem = ({
   className,

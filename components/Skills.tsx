@@ -18,8 +18,11 @@ import {
   SiGithub,
   SiPostman,
   SiFlutter,
+  SiPrisma,
+  SiJavascript,
+  SiDart,
 } from "react-icons/si";
-import { TbApi, TbInfinity, TbTestPipe } from "react-icons/tb";
+import { TbApi, TbInfinity, TbTestPipe, TbLanguage } from "react-icons/tb";
 import { LuKanbanSquare } from "react-icons/lu";
 import type { IconType } from "react-icons";
 
@@ -32,6 +35,7 @@ const skillGroups: { category: string; items: Skill[] }[] = [
       { name: "React.js", icon: SiReact, color: "#61DAFB" },
       { name: "Next.js", icon: SiNextdotjs, color: "#FFFFFF" },
       { name: "TypeScript", icon: SiTypescript, color: "#3178C6" },
+      { name: "JavaScript (ES6+)", icon: SiJavascript, color: "#F7DF1E" },
       { name: "Redux", icon: SiRedux, color: "#764ABC" },
       { name: "Tailwind CSS", icon: SiTailwindcss, color: "#38BDF8" },
       { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
@@ -52,12 +56,14 @@ const skillGroups: { category: string; items: Skill[] }[] = [
       { name: "PostgreSQL", icon: SiPostgresql, color: "#4169E1" },
       { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
       { name: "MySQL", icon: SiMysql, color: "#4479A1" },
+      { name: "Prisma", icon: SiPrisma, color: "#CBACF9" },
     ],
   },
   {
     category: "Mobile",
     items: [
       { name: "Flutter", icon: SiFlutter, color: "#02569B" },
+      { name: "Dart", icon: SiDart, color: "#0175C2" },
       { name: "React Native", icon: SiReact, color: "#61DAFB" },
     ],
   },
@@ -70,6 +76,14 @@ const skillGroups: { category: string; items: Skill[] }[] = [
       { name: "CI/CD", icon: TbInfinity, color: "#CBACF9" },
       { name: "Agile", icon: LuKanbanSquare, color: "#CBACF9" },
       { name: "Unit Testing", icon: TbTestPipe, color: "#CBACF9" },
+    ],
+  },
+  {
+    category: "Languages",
+    items: [
+      { name: "Arabic — Native", icon: TbLanguage, color: "#CBACF9" },
+      { name: "English — Fluent", icon: TbLanguage, color: "#CBACF9" },
+      { name: "Spanish — Basic", icon: TbLanguage, color: "#CBACF9" },
     ],
   },
 ];
