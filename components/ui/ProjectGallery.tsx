@@ -45,8 +45,16 @@ export const ProjectGallery = ({
   const canAutoplay = count > 1 && !reduceMotion;
   const active = canHover ? hovered : inView;
 
+  // Manual changes bump this, restarting the dwell below — otherwise the running
+  // interval could fire moments after a click and skip straight past the frame
+  // the viewer just chose.
+  const [interactionTick, setInteractionTick] = useState(0);
+
   const go = useCallback(
-    (next: number) => setIndex(((next % count) + count) % count),
+    (next: number) => {
+      setIndex(((next % count) + count) % count);
+      setInteractionTick((t) => t + 1);
+    },
     [count]
   );
 
@@ -74,7 +82,7 @@ export const ProjectGallery = ({
       DWELL_MS
     );
     return () => window.clearInterval(id);
-  }, [active, canAutoplay, count]);
+  }, [active, canAutoplay, count, interactionTick]);
 
   // Back to the opening frame once the pointer leaves, so the card always
   // presents the same first impression.
@@ -200,8 +208,9 @@ export const ProjectGallery = ({
               >
                 {i === index && (
                   <span
-                    // Keyed on index so the fill restarts on every frame change.
-                    key={index}
+                    // Keyed on both so the fill restarts on an autoplay tick and
+                    // on a manual pick of the frame already showing.
+                    key={`${index}-${interactionTick}`}
                     className="block h-full w-full origin-left rounded-full bg-purple"
                     style={
                       active && canAutoplay
